@@ -2,7 +2,7 @@ import cors from "cors";
 import express from "express";
 import multer from "multer";
 import { config } from "./config.js";
-import { getJobs } from "./services/jobService.js";
+import { getJobs } from "./services/jobFetcher.js";
 import { matchJobsForResume } from "./services/matcher.js";
 import { parseResumePdf, ResumeParsingError } from "./services/resumeParser.js";
 import { createEmptyMatchResponse } from "./utils/responses.js";
