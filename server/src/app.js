@@ -1,9 +1,11 @@
 import cors from "cors";
 import express from "express";
 import multer from "multer";
+import { config } from "./config.js";
 import { getJobs } from "./services/jobService.js";
-import { matchJobsForResume, createEmptyResume } from "./services/matcher.js";
+import { matchJobsForResume } from "./services/matcher.js";
 import { parseResumePdf, ResumeParsingError } from "./services/resumeParser.js";
+import { createEmptyMatchResponse } from "./utils/responses.js";
 import { validatePdfUpload } from "./utils/uploadValidation.js";
 
 const app = express();
@@ -16,7 +18,7 @@ const upload = multer({
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: config.clientUrl,
   })
 );
 app.use(express.json());
@@ -53,9 +55,7 @@ app.post("/match-jobs", async (req, res) => {
   if (!resume) {
     return res.status(400).json({
       error: "Parsed resume data is required.",
-      resume: createEmptyResume(),
-      jobs: [],
-      count: 0,
+      ...createEmptyMatchResponse(),
     });
   }
 
@@ -106,9 +106,7 @@ app.post("/upload", upload.single("cv"), async (req, res) => {
     if (error instanceof ResumeParsingError) {
       return res.status(422).json({
         error: error.message,
-        resume: createEmptyResume(),
-        jobs: [],
-        count: 0,
+        ...createEmptyMatchResponse(),
       });
     }
 

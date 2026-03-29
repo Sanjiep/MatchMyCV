@@ -1,12 +1,10 @@
-const API_BASE_URL =
-  (typeof import.meta !== "undefined" && import.meta.env?.VITE_API_URL) ||
-  "http://localhost:4000";
+import { apiBaseUrl } from "../config.js";
 
 export async function uploadResume(file) {
   const formData = new FormData();
   formData.append("cv", file);
 
-  const response = await fetch(`${API_BASE_URL}/upload`, {
+  const response = await fetch(`${apiBaseUrl}/upload`, {
     method: "POST",
     body: formData,
   });

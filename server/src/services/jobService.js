@@ -1,3 +1,5 @@
+import { config } from "../config.js";
+
 const FALLBACK_JOBS = [
   {
     title: "Senior Frontend Developer",
@@ -34,7 +36,7 @@ const FALLBACK_JOBS = [
 ];
 
 export async function getJobs() {
-  const apiUrl = process.env.JOB_API_URL;
+  const apiUrl = config.jobApiUrl;
 
   if (!apiUrl) {
     return FALLBACK_JOBS;
@@ -68,8 +70,8 @@ function buildRequestHeaders() {
     Accept: "application/json",
   };
 
-  if (process.env.JOB_API_KEY) {
-    headers.Authorization = `Bearer ${process.env.JOB_API_KEY}`;
+  if (config.jobApiKey) {
+    headers.Authorization = `Bearer ${config.jobApiKey}`;
   }
 
   return headers;
