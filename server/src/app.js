@@ -1,5 +1,6 @@
 import express from "express";
 import multer from "multer";
+import { getJobs } from "./services/jobService.js";
 import { parseResumePdf, ResumeParsingError } from "./services/resumeParser.js";
 import { validatePdfUpload } from "./utils/uploadValidation.js";
 
@@ -18,6 +19,25 @@ app.get("/health", (_req, res) => {
     status: "ok",
     service: "MatchMyCV server",
   });
+});
+
+app.get("/jobs", async (_req, res) => {
+  try {
+    const jobs = await getJobs();
+
+    return res.status(200).json({
+      jobs,
+      count: jobs.length,
+    });
+  } catch (error) {
+    console.error("Job fetching error:", error);
+
+    return res.status(500).json({
+      error: "Unable to fetch jobs at this time.",
+      jobs: [],
+      count: 0,
+    });
+  }
 });
 
 app.post("/upload", upload.single("cv"), async (req, res) => {
