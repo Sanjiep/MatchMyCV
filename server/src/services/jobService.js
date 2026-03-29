@@ -1,10 +1,10 @@
 const FALLBACK_JOBS = [
   {
-    title: "Frontend Engineer",
+    title: "Senior Frontend Developer",
     company: "BrightPath Labs",
     location: "Remote",
     description:
-      "Build responsive candidate-facing interfaces with React, Tailwind CSS, and modern frontend tooling.",
+      "Build recruiter-facing workflows with React, Node.js, JavaScript, Tailwind CSS, and strong English communication across a remote product team.",
     applicationLink: "https://jobs.example.com/brightpath/frontend-engineer",
   },
   {
