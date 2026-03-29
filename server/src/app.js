@@ -1,3 +1,4 @@
+import cors from "cors";
 import express from "express";
 import multer from "multer";
 import { getJobs } from "./services/jobService.js";
@@ -13,6 +14,11 @@ const upload = multer({
   },
 });
 
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
+  })
+);
 app.use(express.json());
 
 app.get("/health", (_req, res) => {
